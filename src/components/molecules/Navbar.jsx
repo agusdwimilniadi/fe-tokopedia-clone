@@ -1,8 +1,13 @@
+import { useAuthUser, useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import { SiBbciplayer } from 'react-icons/si';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
-  const isLogin = false;
+  const isAuthenticated = useIsAuthenticated();
+  const signOut = useSignOut();
+  const auth = useAuthUser();
+  console.log('Auth data', auth());
+
   return (
     <nav className=" border-gray-200 bg-dark">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -12,7 +17,7 @@ export const Navbar = () => {
             T-Play
           </span>
         </Link>
-        {isLogin ? (
+        {isAuthenticated() ? (
           <div className="flex items-center md:order-2">
             <button
               type="button"
@@ -24,8 +29,8 @@ export const Navbar = () => {
             >
               <span className="sr-only">Open user menu</span>
               <img
-                className="w-8 h-8 rounded-full"
-                src="/docs/images/people/profile-picture-3.jpg"
+                className="w-8 h-8 rounded-full border"
+                src="https://i.pinimg.com/originals/7d/34/d9/7d34d9d53640af5cfd2614c57dfa7f13.png"
                 alt="user photo"
               />
             </button>
@@ -35,43 +40,24 @@ export const Navbar = () => {
               id="user-dropdown"
             >
               <div className="px-4 py-3">
-                <span className="block text-sm  text-white">Bonnie Green</span>
+                <span className="block text-sm  text-white">
+                  {auth().username}
+                </span>
                 <span className="block text-sm   truncate text-gray-400">
-                  name@flowbite.com
+                  {auth().email}
                 </span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white"
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white"
-                  >
-                    Settings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white"
-                  >
-                    Earnings
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="block px-4 py-2 text-sm  hover:bg-gray-600 text-gray-200 hover:text-white"
+                  <button
+                    onClick={() => {
+                      signOut();
+                      console.log('Success ', isAuthenticated);
+                    }}
+                    className="block px-4 py-2 text-sm w-full text-start  hover:bg-gray-600 text-gray-200 hover:text-white"
                   >
                     Sign out
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -123,45 +109,28 @@ export const Navbar = () => {
         >
           <ul className="flex flex-col font-medium p-4 md:p-0 mt-4 border  rounded-lg  md:flex-row md:space-x-8 md:mt-0 md:border-0  bg-black md:bg-dark border-gray-700">
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent  md:p-0 md:text-primaryTPlay"
-                aria-current="page"
+              <NavLink
+                to={'/'}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 pl-3 pr-4 rounded md:p-0 text-primaryTPlay'
+                    : 'block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-primaryTPlay'
+                }
               >
                 Home
-              </a>
+              </NavLink>
             </li>
             <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4  rounded   md:p-0 text-white md:hover:text-primaryTPlay hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
+              <NavLink
+                to={'/product'}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 pl-3 pr-4 rounded md:p-0 text-primaryTPlay'
+                    : 'block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-primaryTPlay'
+                }
               >
-                About
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 rounded  md:p-0 text-white md:hover:text-primaryTPlay hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
-              >
-                Services
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 rounded  md:p-0 text-white md:hover:text-primaryTPlay hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
-              >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="block py-2 pl-3 pr-4 rounded ho md:p-0 text-white md:hover:text-primaryTPlay hover:bg-gray-700 hover:text-white md:hover:bg-transparent border-gray-700"
-              >
-                Contact
-              </a>
+                Product
+              </NavLink>
             </li>
           </ul>
         </div>

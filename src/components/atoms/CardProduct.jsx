@@ -11,6 +11,11 @@ export const CardProduct = ({ link, imgUrl, title, price }) => {
       <div className="overflow-hidden rounded-lg">
         <img
           src={imgUrl}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src =
+              'https://cdn.pixabay.com/photo/2022/02/08/02/52/image-7000639_640.png';
+          }}
           alt="img-product"
           className="h-[200px] w-full object-cover rounded-lg group-hover:scale-110 transition-all"
         />

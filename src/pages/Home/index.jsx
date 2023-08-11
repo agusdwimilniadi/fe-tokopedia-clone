@@ -45,14 +45,14 @@ export const Home = () => {
         <h1 className="text-lg font-semibold">Live of The Day</h1>
         <div className="">
           {data.length == 0 ? (
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-4  gap-5">
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
             </div>
           ) : (
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
               {data.toReversed().map((item) => (
                 <CardVideo item={item} key={item._id} />
               ))}

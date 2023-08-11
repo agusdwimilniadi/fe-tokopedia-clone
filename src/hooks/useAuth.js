@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../utils/const';
+import { useSignIn } from 'react-auth-kit';
 
 const useAuth = () => {
+  const signIn = useSignIn();
   const [token, setToken] = useState(localStorage.getItem('authToken') || null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +21,15 @@ const useAuth = () => {
       });
 
       if (response.status === 200) {
-        const authToken = response.data.data.token; // Assuming the API returns a token
-        console.log('Token ', authToken);
+        const authToken = response.data.data.token;
         updateToken(authToken);
         setIsSuccess(true);
-
+        signIn({
+          token: authToken,
+          expiresIn: 3600,
+          tokenType: 'Bearer',
+          authState: response.data.data.user,
+        });
         setTimeout(() => {
           window.location.href = '/';
         }, 1500);
