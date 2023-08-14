@@ -3,11 +3,12 @@ import axios from 'axios';
 import { CardVideo } from '../../components/atoms/CardVIdeo';
 import { SkeletonCard } from '../../components/atoms/SkeletonCard';
 import { LayoutHome } from '../../components/molecules/LayoutHome';
+import { API_URL } from '../../utils/const';
 export const Home = () => {
   const [data, setData] = useState([]);
   const getData = async () => {
     try {
-      const res = await axios.get('http://localhost:3000/video');
+      const res = await axios.get(API_URL + 'video');
       setData(res.data.data);
     } catch (error) {
       console.log(error);

@@ -21,12 +21,8 @@ export const DetailVideo = () => {
   const params = useParams();
   const getData = async () => {
     try {
-      const res = await axios.get(
-        `http://localhost:3000/video/detail/${params.id}`
-      );
-      const comment = await axios.get(
-        `http://localhost:3000/comment/video/${params.id}`
-      );
+      const res = await axios.get(`${API_URL}video/detail/${params.id}`);
+      const comment = await axios.get(`${API_URL}comment/video/${params.id}`);
       setDataComment(comment.data.data);
       setData(res.data.data.products);
       setYoutubeId(YouTubeGetID(res.data.data.videoUrl));
@@ -67,6 +63,7 @@ export const DetailVideo = () => {
       containerRef.current.scrollTop = containerRef.current.scrollHeight;
     }
   }, [dataComment]);
+
   return (
     <LayoutHome>
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
