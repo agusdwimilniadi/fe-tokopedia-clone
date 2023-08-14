@@ -1,1 +1,1 @@
-export const API_URL = 'https://fierce-jay-shorts.cyclic.app/';
+export const API_URL = 'https://api-tplay.cyclic.app/';
