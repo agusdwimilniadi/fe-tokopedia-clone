@@ -4,6 +4,7 @@ import axios from 'axios';
 import { API_URL } from '../../utils/const';
 import { CardProduct } from '../../components/atoms/CardProduct';
 import { SkeletonCard } from '../../components/atoms/SkeletonCard';
+import { Link } from 'react-router-dom';
 
 export const Product = () => {
   const [dataProduct, setDataProduct] = useState([]);
@@ -21,6 +22,14 @@ export const Product = () => {
   return (
     <LayoutHome>
       <h1 className="text-center text-lg font-bold">All Product on T-Play</h1>
+      <div className="text-end mt-5">
+        <Link
+          to={'/add-product'}
+          className="inline-block bg-primaryTPlay p-3 rounded "
+        >
+          Add Product
+        </Link>
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-5 mt-10 gap-5">
         {dataProduct.length == 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-4  gap-5">

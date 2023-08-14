@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAuthUser, useIsAuthenticated, useSignOut } from 'react-auth-kit';
 import { SiBbciplayer } from 'react-icons/si';
 import { Link, NavLink } from 'react-router-dom';
@@ -6,10 +7,10 @@ export const Navbar = () => {
   const isAuthenticated = useIsAuthenticated();
   const signOut = useSignOut();
   const auth = useAuthUser();
-  console.log('Auth data', auth());
+  const [setsetShow, setSetsetShow] = useState(false);
 
   return (
-    <nav className=" border-gray-200 bg-dark">
+    <nav className=" border-gray-200 bg-dark relative">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <Link to={'/'} className="flex items-center">
           <SiBbciplayer size={30} />
@@ -18,7 +19,36 @@ export const Navbar = () => {
           </span>
         </Link>
         {isAuthenticated() ? (
-          <div className="flex items-center md:order-2">
+          <div
+            className={`z-50 absolute right-10 top-16 ${
+              setsetShow ? 'block' : 'hidden'
+            }  my-4 text-base list-none  divide-y  rounded-lg shadow bg-gray-700 divide-gray-600`}
+            id="user-dropdown"
+          >
+            <div className="px-4 py-3">
+              <span className="block text-sm  text-white">
+                {auth().username}
+              </span>
+              <span className="block text-sm   truncate text-gray-400">
+                {auth().email}
+              </span>
+            </div>
+            <ul className="py-2" aria-labelledby="user-menu-button">
+              <li>
+                <button
+                  onClick={() => {
+                    signOut();
+                  }}
+                  className="block px-4 py-2 text-sm w-full text-start  hover:bg-gray-600 text-gray-200 hover:text-white"
+                >
+                  Sign out
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : null}
+        {isAuthenticated() ? (
+          <div className="flex items-center md:order-2 ">
             <button
               type="button"
               className="flex mr-3 text-sm bg-black rounded-full md:mr-0 focus:ring-4  focus:ring-gray-600"
@@ -26,6 +56,9 @@ export const Navbar = () => {
               aria-expanded="false"
               data-dropdown-toggle="user-dropdown"
               data-dropdown-placement="bottom"
+              onClick={() => {
+                setSetsetShow(!setsetShow);
+              }}
             >
               <span className="sr-only">Open user menu</span>
               <img
@@ -35,32 +68,7 @@ export const Navbar = () => {
               />
             </button>
             {/* Dropdown menu */}
-            <div
-              className="z-50 hidden my-4 text-base list-none  divide-y  rounded-lg shadow bg-gray-700 divide-gray-600"
-              id="user-dropdown"
-            >
-              <div className="px-4 py-3">
-                <span className="block text-sm  text-white">
-                  {auth().username}
-                </span>
-                <span className="block text-sm   truncate text-gray-400">
-                  {auth().email}
-                </span>
-              </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <button
-                    onClick={() => {
-                      signOut();
-                      console.log('Success ', isAuthenticated);
-                    }}
-                    className="block px-4 py-2 text-sm w-full text-start  hover:bg-gray-600 text-gray-200 hover:text-white"
-                  >
-                    Sign out
-                  </button>
-                </li>
-              </ul>
-            </div>
+
             <button
               data-collapse-toggle="navbar-user"
               type="button"
@@ -130,6 +138,18 @@ export const Navbar = () => {
                 }
               >
                 Product
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to={'/video'}
+                className={({ isActive }) =>
+                  isActive
+                    ? 'block py-2 pl-3 pr-4 rounded md:p-0 text-primaryTPlay'
+                    : 'block py-2 pl-3 pr-4 rounded md:p-0 text-white hover:text-primaryTPlay'
+                }
+              >
+                Video
               </NavLink>
             </li>
           </ul>

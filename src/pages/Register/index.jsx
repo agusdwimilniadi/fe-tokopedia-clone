@@ -3,17 +3,18 @@ import { SiBbciplayer } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
-export const Login = () => {
-  const { login, isSuccess, isLoading, errorMsg, setErrorMsg } = useAuth();
+export const Register = () => {
+  const { register, isSuccess, isLoading, errorMsg, setErrorMsg } = useAuth();
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
+      username: '',
     },
     onSubmit: async (values) => {
       setErrorMsg(null);
       try {
-        await login(values.email, values.password);
+        await register(values.email, values.password, values.username);
       } catch (error) {
         console.log(error.message);
       }
@@ -35,11 +36,11 @@ export const Login = () => {
         <div className="w-full bg-secondaryTPlay rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-white">
-              Sign in to your account
+              Sign Up to your account
             </h1>
             {isSuccess ? (
               <div className="text-center bg-green-500 py-1 rounded-lg">
-                Success login, please wait...{' '}
+                Success register, please wait...{' '}
                 <div role="status" className="inline-block ms-2">
                   <svg
                     aria-hidden="true"
@@ -72,10 +73,27 @@ export const Login = () => {
             >
               <div>
                 <label
+                  htmlFor="username"
+                  className="block mb-2 text-sm font-medium text-white"
+                >
+                  Username
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  onChange={formik.handleChange}
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="username"
+                  required
+                />
+              </div>
+              <div>
+                <label
                   htmlFor="email"
                   className="block mb-2 text-sm font-medium text-white"
                 >
-                  Your email
+                  Email
                 </label>
                 <input
                   type="email"
@@ -132,15 +150,15 @@ export const Login = () => {
                 type="submit"
                 className="w-full text-white bg-primaryTPlay hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
-                {isLoading ? 'Please wait..' : 'Sign in'}
+                {isLoading ? 'Please wait..' : 'Sign Up'}
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{' '}
+                Have an account?{' '}
                 <Link
-                  to={'/register'}
+                  to={'/login'}
                   className="font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  Sign up
+                  Sign In
                 </Link>
               </p>
             </form>

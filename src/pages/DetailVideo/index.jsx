@@ -47,7 +47,7 @@ export const DetailVideo = () => {
     },
     onSubmit: async (values) => {
       try {
-        const res = await axios.post(API_URL + 'comment', values, {
+        await axios.post(API_URL + 'comment', values, {
           headers: {
             Authorization: `${authHeader()}`,
             'Content-Type': 'application/json',
@@ -55,7 +55,6 @@ export const DetailVideo = () => {
         });
         setSetter(!setter);
         formik.resetForm();
-        console.log(res);
       } catch (error) {
         console.log(error);
       }

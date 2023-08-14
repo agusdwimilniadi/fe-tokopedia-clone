@@ -42,6 +42,29 @@ const useAuth = () => {
       setIsLoading(false);
     }
   };
+  const register = async (email, password, username) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post(API_URL + 'auth/register', {
+        email,
+        password,
+        username,
+      });
+
+      if (response.status === 200) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          window.location.href = '/login';
+        }, 1500);
+      }
+    } catch (error) {
+      if (error.response.status == 404 || error.response.status == 401) {
+        setErrorMsg('Username, email or password is Required');
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const logout = () => {
     updateToken(null);
@@ -65,6 +88,7 @@ const useAuth = () => {
     isLoading,
     errorMsg,
     setErrorMsg,
+    register,
   };
 };
 
