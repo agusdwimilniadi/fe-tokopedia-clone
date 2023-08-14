@@ -2,6 +2,11 @@
 
 Agus Dwi Milniadi || GG3FSGP0245
 
+## Production Server
+
+- You can access this apps in : https://t-play.agusdm.com/
+- You can access this API Apps in : https://api-tplay.cyclic.app/
+
 T-Play is a Tokopedia play clone web-apps using MERN Stack (Mongo, Express, React and NodeJS)
 
 ## Features
